@@ -19,3 +19,9 @@ Route::post('login', 'UserController@login')->name('user.login');
 Route::get('logOut', 'UserController@logOut')->name('user.logOut');
 //-------------------------------------------------------------------
 Route::redirect('/', route('event.index'), 301);
+
+
+//-----------------------------------
+Route::get('/test', function () {
+    return App\Event::all()->fresh();
+});

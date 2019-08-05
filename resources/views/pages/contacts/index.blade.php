@@ -53,7 +53,7 @@
                     <td>{{ $contact->email }}</td>
                     <td>{{ $contact->sujet }}</td>
                     <td>{{ $contact->message }}</td>
-                    <td>{{ $contact->created_at }}</td>
+                    <td>{{ $contact->created_at->diffForHumans() }}</td>
                     <td>
                         <form action="{{ route('contact.destroy',$contact->id) }}" method="POST">
                             <div class="btn-group">

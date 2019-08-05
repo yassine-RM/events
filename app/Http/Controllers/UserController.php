@@ -68,14 +68,15 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         //
+
         $user = new User;
+
         $user->nom = $request->Name;
 
-        if ($request->has("Image")) {
+        if ($request->has("Image"))
             $user->image = $request->Image->store("images", "public");
-        }
 
-        $user->email = $request->Email;
+
         $user->password = bcrypt($request->Password);
 
         $user->save();
@@ -95,7 +96,7 @@ class UserController extends Controller
     {
         //
         $user = User::find($id);
-        return view("pages.users.profile", compact('user'));
+        return view('pages.users.profile', compact('user'));
     }
 
     /**
@@ -125,26 +126,29 @@ class UserController extends Controller
         $this->validate(
             $request,
             [
-                "Name" => "required|string|min:2",
-                "Image" => "required|image",
-                "Password" => "required|min:6",
-                "Repeat_password" => "required_with:Password|same:Password|min:6",
+                "Name" => "string|min:2",
+                "Image" => "image",
+                "Password" => "",
+                "Repeat_password" => "same:Password",
+
             ]
         );
 
         $user = User::find($id);
-        $user->nom = $request->Name;
-        $old_image = $user->image;
+        if ($request->has('Name'))
+            $user->nom = $request->Name;
+
         if ($request->has('Image')) {
-            File::delete("images/" . $old_image);
             $user->image = $request->Image->store('images', 'public');
         }
+        if ($request->has('Password'))
+            $user->password = bcrypt($request->Password);
 
-        $user->password = bcrypt($request->Password);
+
 
         $user->save();
         flash("Votre profile a été modifier avec succée", "info", "Félicitation");
-        return redirect()->route('user.show', $user->id);
+        return view('pages.users.profile');
     }
 
     /**

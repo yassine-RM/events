@@ -44,7 +44,7 @@
                     <td>{{ $event->user->email }}</td>
                     <td>{{ $event->titre }}</td>
                     <td>{{ $event->description }}</td>
-                    <td>{{ $event->created_at }}</td>
+                    <td>{{ $event->created_at->diffForHumans() }}</td>
                     <td>
                         <form action="{{ route('event.destroy',$event->id) }}" method="POST">
                             <div class="btn-group">

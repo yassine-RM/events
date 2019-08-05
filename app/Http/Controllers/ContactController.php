@@ -19,7 +19,7 @@ class ContactController extends Controller
     public function index()
     {
         //
-        $contacts = Auth::user()->contacts()->paginate('5');
+        $contacts = Auth::user()->contacts()->orderBy('created_at', 'desc')->paginate('5');
 
         return view("pages.contacts.index", compact('contacts'));
     }

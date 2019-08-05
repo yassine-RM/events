@@ -24,7 +24,7 @@ class EventController extends Controller
     {
         //
 
-        $events = Auth::user()->events()->paginate(5);
+        $events = Auth::user()->events()->orderBy('created_at', 'desc')->paginate(5);
 
         return view("pages.events.index", compact('events'));
     }
@@ -104,7 +104,7 @@ class EventController extends Controller
         $event->description = $request->description;
 
         $event->save();
-        flash("vote event editer avec succeee", "warning", "Félicitation ");
+        flash("vote event editer avec succeee", "info", "Félicitation ");
 
         return redirect()->route("event.index");
     }
